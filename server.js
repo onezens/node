@@ -4,7 +4,6 @@
 	This file 'server.js' is server start up 服务器创建或者启动模块
 */
 
-
 var http = require("http");
 var url = require("url");
 function start(route, handle) {
@@ -21,7 +20,7 @@ function start(route, handle) {
 		res.end()
 	}
 
-	http.createServer(onRequest).listen(8080);
+	http.createServer(onRequest).listen(8081);
 	console.log("Server Starting.......");
 }
 
