@@ -6,11 +6,20 @@
 function start() {
 
 	console.log("The request for 'start' was called! ");
+
+	function sleep(msec) { //当前线程等待msec毫秒
+
+		var startTime = new Date().getTime();
+		while(new Date().getTime()<startTime + msec);
+	}
+	sleep(1000); //等待10s
+	return "Hello start"; //返回执行结果
 }
 
 function upload() {
 
 	console.log("The request for 'Upload' was called! ");
+	return "Hello upload";
 }
 
 //申明外部接口

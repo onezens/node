@@ -11,13 +11,13 @@ function start(route, handle) {
 
 	function onRequest(req, res) {
 
-		var pathname = url.parse(req.url).pathname;
+		var pathname = url.parse(req.url).pathname; //获取url的请求路径
 		console.log("Request for " + pathname + " Received! ");
-		route(handle, pathname);
+		var content = route(handle, pathname);
 
 		res.writeHead(200, {"content-type" : "text/plain"});
 		res.write("<h1>Hello World!</h1>");
-		res.write("The request is : " + url.parse(req.url));
+		res.write(content); //响应执行结果
 		res.end()
 	}
 
