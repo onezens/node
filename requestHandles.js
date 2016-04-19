@@ -3,6 +3,44 @@
 	This file is module for request 处理请求的模块
 */
 
+
+/** handle post request
+ */
+
+function start(response, postData) {
+
+    console.log("Request handler start was called! ");
+
+    var body = '<html>' +
+        '<head>' +
+        '<meta http-equiv="content-type" content="text/html; ' +
+        'charset=UTF-8" />' +
+        '</head>' +
+        '<body>' +
+        '<form action="/upload" method="post">' +
+        '<textarea name = "text" rows="20" cols="60"></textarea>' +
+        '<input type="submit" value="Submit text" />' +
+        '</form>' +
+        '</body>' +
+        '</html>';
+
+    response.writeHead(200, {"content-type" : "text/html"});
+    response.write(body);
+    response.end();
+}
+function upload(response, postData) {
+
+    console.log("The request for 'Upload' was called! ");
+    response.writeHead(200, {"content-type" : "text/plain"});
+    response.write("you have sent: " + postData);
+    response.end();
+}
+
+//申明外部接口
+exports.start = start;
+exports.upload = upload;
+
+/** 耗时操作处理  ***
 var exec = require("child_process").exec;
 
 function start(response) {
