@@ -7,6 +7,9 @@
 /** handle post request
  */
 
+var queryString = require("querystring");
+
+
 function start(response, postData) {
 
     console.log("Request handler start was called! ");
@@ -32,7 +35,9 @@ function upload(response, postData) {
 
     console.log("The request for 'Upload' was called! ");
     response.writeHead(200, {"content-type" : "text/plain"});
-    response.write("you have sent: " + postData);
+    //通过querySting 来取数据
+    response.write("you have sent: " + queryString.parse(postData).text);
+
     response.end();
 }
 
