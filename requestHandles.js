@@ -3,6 +3,38 @@
 	This file is module for request 处理请求的模块
 */
 
+var exec = require("child_process").exec;
+
+function start(response) {
+
+    console.log("Request for start was called!");
+    var content = "empty";
+
+    // ls -lah 输出根目录的文件  find / 遍历输出根磁盘的第一个文件路径
+    exec("find /", function (error, stdout, stderr){
+
+            response.writeHead(200, {"content-type": "text/plain"});
+            response.write(stdout);
+            response.end();
+        }
+    );
+}
+
+
+function upload(response) {
+
+    console.log("The request for 'Upload' was called! ");
+    response.writeHead(200, {"content-type" : "text/plain"});
+    response.write("Hello upload!");
+    response.end();
+}
+
+//申明外部接口
+exports.start = start;
+exports.upload = upload;
+
+/************  archiver for 2016-04-19  ************
+
 function start() {
 
 	console.log("The request for 'start' was called! ");

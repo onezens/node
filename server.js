@@ -4,6 +4,30 @@
 	This file 'server.js' is server start up 服务器创建或者启动模块
 */
 
+
+var http = require("http");
+var url = require("url");
+function start(route, handle) {
+
+    function onRequest(req, res) {
+
+        var pathname = url.parse(req.url).pathname; //获取url的请求路径
+        console.log("Request for " + pathname + " Received! ");
+
+        route(handle, pathname, res);
+    }
+
+    http.createServer(onRequest).listen(8081);
+    console.log("Server Starting.......");
+}
+
+exports.start = start;
+
+
+
+
+/************  archiver for 2016-04-19  ************
+
 var http = require("http");
 var url = require("url");
 function start(route, handle) {
@@ -27,7 +51,7 @@ function start(route, handle) {
 exports.start = start;
 
 
-/************  archiver for 2016-04-18
+/************  archiver for 2016-04-18  ************
 //judge url paragrma
 
 var http = require("http");
