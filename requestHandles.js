@@ -11,7 +11,7 @@ function start(response) {
     var content = "empty";
 
     // ls -lah 输出根目录的文件  find / 遍历输出根磁盘的第一个文件路径
-    exec("find /", function (error, stdout, stderr){
+    exec("find /", {timeout: 10000, maxBuffer: 20000*1024},function (error, stdout, stderr){
 
             response.writeHead(200, {"content-type": "text/plain"});
             response.write(stdout);
