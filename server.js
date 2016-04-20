@@ -5,6 +5,71 @@
 */
 
 
+
+var http = require("http");
+var url = require("url");
+function start(route, handle) {
+
+    function onRequest(req, res) { //接收到请求
+        var postData = "";
+        var pathname = url.parse(req.url).pathname; //获取url的请求路径
+        console.log("Request for " + pathname + " Received! ");
+
+        req.setEncoding("utf8");
+
+        req.addListener("data", function(postDataChunk){ //传输数据
+            postData += postDataChunk;
+            console.log("Received Post Data chunk ** " + postDataChunk + " **");
+        });
+
+        req.addListener("end", function(){
+            //数据接收完毕之后处理请求
+            route(handle, pathname, res, postData);
+        })
+
+
+    }
+
+    http.createServer(onRequest).listen(8081);
+    console.log("Server Starting.......");
+}
+
+exports.start = start;
+
+
+//var formidable = require('formidable'),
+//    http = require('http'),
+//    sys = require('sys');
+//
+//http.createServer(function(req, res){
+//
+//    if(req.url == "/upload" && req.method.toLowerCase() == 'post') {
+//        //parse a file upload
+//        var form = new formidable.IncomingForm();
+//        form.parse(req, function(err, fields, files){
+//
+//            res.writeHead(200, {"content-type" : "text/plain"});
+//            res.write("received upload:\n\n");
+//            res.end(sys.inspect({fields: fields, files: files}));
+//        });
+//        return;
+//    }
+//
+//    res.writeHead(200, {"content-type" : "text/html"});
+//    res.end(
+//        '<form action="/upload" enctype="multipart/form-data" ' +
+//            'method="post">' +
+//            '<input type="text" name="title"><br>' +
+//            '<input type="file" name="upload" multiple="multiple"><br>' +
+//            '<input type="submit" value="upload">'  +
+//            '</form>'
+//    );
+//}).listen(8080);
+
+
+/************  archiver for 2016-04-20  ************
+
+
 var http = require("http");
 var url = require("url");
 function start(route, handle) {

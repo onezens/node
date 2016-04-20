@@ -7,6 +7,63 @@
 /** handle post request
  */
 
+var querystring = require("querystring"),
+    fs = require("fs");
+
+function start(response, postData) {
+
+    console.log("Request handler start was called!");
+
+    var body = '<html>' +
+        '<head>' +
+        '<meta http-equiv="content-type" content="text/html; ' +
+        'charset=UTF-8" />' +
+        '</head>' +
+        '<body>' +
+        '<form action="/upload" method="post">' +
+        '<textarea name = "text" rows="20" cols="60"></textarea>' +
+        '<input type="submit" value="Submit text" />' +
+        '</form>' +
+        '</body>' +
+        '</html>';
+
+    response.writeHead(200, {"content-type" : "text/html"});
+    response.write(body);
+    response.end();
+}
+
+function upload(response, postData) {
+
+    console.log("Request handler upload was called.");
+
+    response.writeHead(200, {"content-type" : "text/plain"});
+    response.write("you have send the text: " + querystring.parse(postData).text);
+    response.end();
+}
+
+function show(response, postData) {
+    console.log("Request handler show was called!");
+    //warn: 路径前面加 . 表示根目录，否则会报错文件找不到
+    fs.readFile("./tmp/test.jpg", "binary", function(error, file){
+
+        if(error) {
+            response.writeHead(500, {"content-type": "text/plain"});
+            response.write(error + "\n");
+            response.end();
+        }else {
+            response.writeHead(200, {"content-type" : "image/png"});
+            response.write(file, "binary");
+            response.end();
+        }
+    });
+}
+
+
+exports.start = start;
+exports.upload = upload;
+exports.show = show;
+
+/************  archiver for 2016-04-20  ************
 var queryString = require("querystring");
 
 
