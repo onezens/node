@@ -11,23 +11,10 @@ var url = require("url");
 function start(route, handle) {
 
     function onRequest(req, res) { //接收到请求
-        var postData = "";
         var pathname = url.parse(req.url).pathname; //获取url的请求路径
         console.log("Request for " + pathname + " Received! ");
 
-        req.setEncoding("utf8");
-
-        req.addListener("data", function(postDataChunk){ //传输数据
-            postData += postDataChunk;
-            console.log("Received Post Data chunk ** " + postDataChunk + " **");
-        });
-
-        req.addListener("end", function(){
-            //数据接收完毕之后处理请求
-            route(handle, pathname, res, postData);
-        })
-
-
+        route(handle, pathname, res, req);
     }
 
     http.createServer(onRequest).listen(8081);

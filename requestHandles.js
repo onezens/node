@@ -8,9 +8,11 @@
  */
 
 var querystring = require("querystring"),
-    fs = require("fs");
+    fs = require("fs"),
+    formidable = require("formidable");
 
-function start(response, postData) {
+//显示上传图片的html
+function start(response, resquest) {
 
     console.log("Request handler start was called!");
 
@@ -20,9 +22,9 @@ function start(response, postData) {
         'charset=UTF-8" />' +
         '</head>' +
         '<body>' +
-        '<form action="/upload" method="post">' +
-        '<textarea name = "text" rows="20" cols="60"></textarea>' +
-        '<input type="submit" value="Submit text" />' +
+        '<form action="/upload" enctype="multipart/form-data" method="post">' +
+        '<input type="file" name="upload">' +
+        '<input type="submit" value="upload file" />' +
         '</form>' +
         '</body>' +
         '</html>';
@@ -32,19 +34,30 @@ function start(response, postData) {
     response.end();
 }
 
-function upload(response, postData) {
+//上传图片到服务器
+function upload(response, resquest) {
 
     console.log("Request handler upload was called.");
 
-    response.writeHead(200, {"content-type" : "text/plain"});
-    response.write("you have send the text: " + querystring.parse(postData).text);
-    response.end();
+    var form = new formidable.IncomingForm();
+    console.log("About to parse!");
+    form.parse(resquest, function(error, fields, files){
+
+        console.log("parse done!");
+        fs.renameSync(files.upload.path, "./tmp/1.png");//保存路径
+        response.writeHead(200, {"content-type":"text/html"});
+        response.write("received image: <br/>");
+        response.write("<img src = '/show' />");
+        response.end();
+
+    });
+
 }
 
-function show(response, postData) {
+function show(response) {
     console.log("Request handler show was called!");
     //warn: 路径前面加 . 表示根目录，否则会报错文件找不到
-    fs.readFile("./tmp/test.jpg", "binary", function(error, file){
+    fs.readFile("./tmp/1.png", "binary", function(error, file){
 
         if(error) {
             response.writeHead(500, {"content-type": "text/plain"});
