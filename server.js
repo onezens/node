@@ -8,6 +8,8 @@
 
 var http = require("http");
 var url = require("url");
+var db = require("./db.js");
+
 function start(route, handle) {
 
     function onRequest(req, res) { //接收到请求
@@ -19,6 +21,8 @@ function start(route, handle) {
 
     http.createServer(onRequest).listen(8081);
     console.log("Server Starting.......");
+    db.connectionDB();
+//    db.insert();
 }
 
 exports.start = start;
