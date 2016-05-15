@@ -21,7 +21,7 @@ function start(route, handle) {
 
     http.createServer(onRequest).listen(8081);
     console.log("Server Starting.......");
-    db.connectionDB();
+//    db.connectionDB();
 //    db.insert();
 }
 

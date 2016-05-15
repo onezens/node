@@ -5,6 +5,16 @@ var DB_CONN_STR = 'mongodb://localhost:27017/test';
 var DB = null;
 var UserTableName = "users";
 
+
+/*** user operation ****/
+
+function addUser(name, pwd) {
+
+
+}
+
+/*** test operation ****/
+
 var insertData = function(db, callback) {
     //连接到表
     var collection = db.collection(UserTableName);

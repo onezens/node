@@ -11,6 +11,7 @@ handle["/"] = requestHandles.start;
 handle["/start"] = requestHandles.start;
 handle["/upload"] = requestHandles.upload;
 handle["/show"] = requestHandles.show;
+handle["/post"] = requestHandles.parseJSON;
 
 server.start(router.route, handle);
 
