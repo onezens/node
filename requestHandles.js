@@ -10,6 +10,52 @@
 var querystring = require("querystring"),
     fs = require("fs"),
     formidable = require("formidable");
+var dict = {status: 0, error_info: ""};
+
+function parseJSON(res,req){
+
+    console.log("start parse json");
+//    var arr = [];
+    var data = '';
+    req.on('data', function(chunk){
+        // 如果传输数据比较大，这里要做buffer拼接
+        data = chunk;
+    });
+    req.on('end', function(){
+        var params = querystring.parse(data.toString('utf-8'));
+        console.log(params);
+        var pStr = JSON.stringify(params); //将字典转换为json
+//        params = JSON.parse(pStr); //将jsonstring转换为字典
+        console.log(pStr);
+        res.write(pStr);
+        res.end();
+    });
+
+
+//    req.on("data",function(data){
+//        console.log(data);
+//        arr.push(data);
+//    });
+//    req.on("end",function(){
+//        var data= Buffer.concat(arr).toString(),ret;
+//        try{
+//            var ret = JSON.parse(data);
+//        }catch(err){
+//
+//            dict["status"] = 1;
+//            dict["error_info"] = err;
+//            res.writeHead(200, {"content-type" : "application/json"});
+//            res.write(dict.toJSON);
+//            res.end();
+//        }
+//        req.body = ret;
+//
+//        dict["result"] =  ret;
+//        res.writeHead(200, {"content-type" : "application/json"});
+//        res.write(dict.toJSON);
+//        res.end();
+//    })
+}
 
 //显示上传图片的html
 function start(response, resquest) {
@@ -75,6 +121,7 @@ function show(response) {
 exports.start = start;
 exports.upload = upload;
 exports.show = show;
+exports.parseJSON = parseJSON;
 
 /************  archiver for 2016-04-20  ************
 var queryString = require("querystring");
