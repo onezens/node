@@ -5,7 +5,7 @@ var mysql = require('mysql');
 var conn;
 function handleError () {
     conn = mysql.createConnection({
-        host: '139.129.45.62',
+        host: 'localhost',
         user: 'root',
         password: '',
         database: 'test',
