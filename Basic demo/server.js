@@ -4,11 +4,9 @@
 	This file 'server.js' is server start up 服务器创建或者启动模块
 */
 
-
-
 var http = require("http");
 var url = require("url");
-var db = require("./db.js");
+//var db = require("./db.js");
 
 function start(route, handle) {
 
@@ -21,8 +19,6 @@ function start(route, handle) {
 
     http.createServer(onRequest).listen(8081);
     console.log("Server Starting.......");
-//    db.connectionDB();
-//    db.insert();
 }
 
 exports.start = start;

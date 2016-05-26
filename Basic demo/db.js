@@ -5,7 +5,6 @@ var DB_CONN_STR = 'mongodb://localhost:27017/test';
 var DB = null;
 var UserTableName = "users";
 
-
 /*** user operation ****/
 
 function addUser(name, pwd) {

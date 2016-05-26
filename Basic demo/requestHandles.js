@@ -8,8 +8,8 @@
  */
 
 var querystring = require("querystring"),
-    fs = require("fs"),
-    formidable = require("formidable");
+    fs = require("fs");
+var formidable = require('formidable')
 var dict = {status: 0, error_info: ""};
 
 function parseJSON(res,req){
